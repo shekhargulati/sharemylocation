@@ -8,10 +8,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 
+@ApplicationScoped
 public class MongoConfig {
 
     @Produces
-    @ApplicationScoped
     public DB db() {
         try {
             String host = System.getenv("OPENSHIFT_MONGODB_DB_HOST");
