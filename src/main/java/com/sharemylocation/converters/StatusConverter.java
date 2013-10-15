@@ -18,13 +18,15 @@ class StatusConverter implements Converter<Status> {
 
     @Override
     public DBObject toMongo(Status status) {
-        BasicDBList lngLatList = new BasicDBList();
+        BasicDBObject lngLat = new BasicDBObject();
         if (status.getLocation() != null) {
+            BasicDBList lngLatList = new BasicDBList();
             lngLatList.add(status.getLocation().getLngLat()[0]);
             lngLatList.add(status.getLocation().getLngLat()[1]);
+            lngLat.put("type", status.getLocation().getType().getName());
+            lngLat.put("lngLat", lngLatList);
         }
-        DBObject lngLat = BasicDBObjectBuilder.start().add("type", status.getLocation().getType().getName())
-                .add("lngLat", lngLatList).get();
+
         return BasicDBObjectBuilder.start().add("status", status.getStatus()).add("postedOn", status.getPostedOn())
                 .add("hashTags", status.getHashTags()).add("postedBy", status.getPostedBy()).add("location", lngLat)
                 .get();
@@ -40,6 +42,7 @@ class StatusConverter implements Converter<Status> {
         BasicDBList basicDbList = (BasicDBList) basicDBObject.get("hashTags");
         String[] hashTags = toStringArray(basicDbList);
         String postedBy = basicDBObject.getString("postedBy");
+
         BasicDBObject locationObj = (BasicDBObject) basicDBObject.get("location");
         if (locationObj != null) {
             String type = locationObj.getString("type");
