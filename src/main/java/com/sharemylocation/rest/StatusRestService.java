@@ -28,6 +28,7 @@ public class StatusRestService {
     @Inject
     private Converters converters;
 
+    @SuppressWarnings("unchecked")
     @POST
     @Consumes(value = MediaType.APPLICATION_JSON)
     public Response postStatus(@Valid Status status) {
@@ -37,6 +38,7 @@ public class StatusRestService {
         return Response.created(uri).build();
     }
 
+    @SuppressWarnings("unchecked")
     @GET
     @Produces(value = MediaType.APPLICATION_JSON)
     public List<Status> allStatuses() {

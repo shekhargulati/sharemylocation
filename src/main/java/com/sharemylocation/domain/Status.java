@@ -11,7 +11,7 @@ public class Status {
     @NotNull
     private String status;
 
-    private final Date postedOn = new Date();
+    private Date postedOn = new Date();
 
     private String[] hashTags;
 
@@ -22,12 +22,14 @@ public class Status {
     public Status() {
     }
 
-    public Status(String status, String[] hashTags, String postedBy, Location location) {
+    public Status(String id ,String status, String[] hashTags, String postedBy, Location location, Date postedOn) {
         super();
+        this.id = id;
         this.status = status;
         this.hashTags = hashTags;
         this.postedBy = postedBy;
         this.location = location;
+        this.postedOn = postedOn;
     }
 
     public void setId(String id) {

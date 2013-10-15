@@ -13,4 +13,14 @@ public enum Type {
     public String getName() {
         return name;
     }
+
+    public static Type type(String name) {
+        Type[] types = values();
+        for (Type type : types) {
+            if (type.getName().equals(name)) {
+                return type;
+            }
+        }
+        throw new RuntimeException("Not found");
+    }
 }
