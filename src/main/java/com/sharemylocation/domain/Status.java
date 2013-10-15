@@ -18,6 +18,9 @@ public class Status {
     private String postedBy;
 
     private Location location;
+    
+    public Status() {
+    }
 
     public Status(String status, String[] hashTags, String postedBy, Location location) {
         super();
@@ -27,10 +30,18 @@ public class Status {
         this.location = location;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+    
     public String getId() {
         return id;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+    
     public String getStatus() {
         return status;
     }
@@ -39,14 +50,26 @@ public class Status {
         return postedOn;
     }
 
+    public void setHashTags(String[] hashTags) {
+        this.hashTags = hashTags;
+    }
+    
+    
     public String[] getHashTags() {
         return hashTags;
     }
 
+    public void setPostedBy(String postedBy) {
+        this.postedBy = postedBy;
+    }
     public String getPostedBy() {
         return postedBy;
     }
 
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    
     public Location getLocation() {
         return location;
     }
