@@ -44,7 +44,7 @@ class StatusConverter implements Converter<Status> {
         String postedBy = basicDBObject.getString("postedBy");
 
         BasicDBObject locationObj = (BasicDBObject) basicDBObject.get("location");
-        if (locationObj != null) {
+        if (locationObj != null && !locationObj.isEmpty()) {
             String type = locationObj.getString("type");
             BasicDBList lngLatList = (BasicDBList) locationObj.get("lngLat");
             double[] lngLat = new double[2];
