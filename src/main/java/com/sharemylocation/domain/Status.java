@@ -22,6 +22,18 @@ public class Status {
 
     public Status() {
     }
+    
+    
+
+    public Status(String status, String[] hashTags, String postedBy, Location location) {
+        super();
+        this.status = status;
+        this.hashTags = hashTags;
+        this.postedBy = postedBy;
+        this.location = location;
+    }
+
+
 
     public Status(String id, String status, String[] hashTags, String postedBy, Location location, Date postedOn) {
         super();

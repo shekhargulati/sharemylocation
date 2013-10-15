@@ -1,35 +1,40 @@
 package com.sharemylocation.domain;
 
+import java.util.Arrays;
+
 public class Location {
 
     private Type type;
-    
-    private double[] lngLat;
-    
-    
+
+    private double[] coordinates;
+
     public Location() {
-        // TODO Auto-generated constructor stub
     }
-    
-    public Location(Type type , double[] lngLat) {
+
+    public Location(Type type, double[] coordinates) {
         this.type = type;
-        this.lngLat= lngLat;
+        this.coordinates = coordinates;
     }
-    
-    
-    public void setLngLat(double[] lngLat) {
-        this.lngLat = lngLat;
+
+    public void setCoordinates(double[] coordinates) {
+        this.coordinates = coordinates;
     }
-    
-    public double[] getLngLat() {
-        return lngLat;
+
+    public double[] getCoordinates() {
+        return coordinates;
     }
-    
+
     public void setType(Type type) {
         this.type = type;
     }
-    
+
     public Type getType() {
         return type;
     }
+
+    @Override
+    public String toString() {
+        return "Location [type=" + type + ", coordinates=" + Arrays.toString(coordinates) + "]";
+    }
+
 }

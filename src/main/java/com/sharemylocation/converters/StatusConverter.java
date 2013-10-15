@@ -14,22 +14,26 @@ import com.sharemylocation.domain.Location;
 import com.sharemylocation.domain.Status;
 import com.sharemylocation.domain.Type;
 
-class StatusConverter implements Converter<Status> {
+public class StatusConverter implements Converter<Status> {
 
     @Override
     public DBObject toMongo(Status status) {
         BasicDBObject lngLat = new BasicDBObject();
         if (status.getLocation() != null) {
             BasicDBList lngLatList = new BasicDBList();
-            lngLatList.add(status.getLocation().getLngLat()[0]);
-            lngLatList.add(status.getLocation().getLngLat()[1]);
+            lngLatList.add(status.getLocation().getCoordinates()[0]);
+            lngLatList.add(status.getLocation().getCoordinates()[1]);
             lngLat.put("type", status.getLocation().getType().getName());
-            lngLat.put("lngLat", lngLatList);
+            lngLat.put("coordinates", lngLatList);
         }
 
-        return BasicDBObjectBuilder.start().add("status", status.getStatus()).add("postedOn", status.getPostedOn())
-                .add("hashTags", status.getHashTags()).add("postedBy", status.getPostedBy()).add("location", lngLat)
-                .get();
+        BasicDBObjectBuilder builder = BasicDBObjectBuilder.start().add("status", status.getStatus())
+                .add("postedOn", status.getPostedOn()).add("hashTags", status.getHashTags())
+                .add("postedBy", status.getPostedBy());
+        if (!lngLat.isEmpty()) {
+            builder.add("location", lngLat);
+        }
+        return builder.get();
     }
 
     @Override
@@ -46,7 +50,7 @@ class StatusConverter implements Converter<Status> {
         BasicDBObject locationObj = (BasicDBObject) basicDBObject.get("location");
         if (locationObj != null && !locationObj.isEmpty()) {
             String type = locationObj.getString("type");
-            BasicDBList lngLatList = (BasicDBList) locationObj.get("lngLat");
+            BasicDBList lngLatList = (BasicDBList) locationObj.get("coordinates");
             double[] lngLat = new double[2];
             if (lngLatList != null) {
                 lngLat[0] = (Double) lngLatList.get(0);
