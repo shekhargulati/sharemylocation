@@ -18,10 +18,16 @@ class StatusConverter implements Converter<Status> {
 
     @Override
     public DBObject toMongo(Status status) {
+        BasicDBList lngLatList = new BasicDBList();
+        if (status.getLocation() != null) {
+            lngLatList.add(status.getLocation().getLngLat()[0]);
+            lngLatList.add(status.getLocation().getLngLat()[1]);
+        }
+        DBObject lngLat = BasicDBObjectBuilder.start().add("type", status.getLocation().getType())
+                .add("lngLat", lngLatList).get();
         return BasicDBObjectBuilder.start().add("status", status.getStatus()).add("postedOn", status.getPostedOn())
-                .add("hashTags", status.getHashTags()).add("postedBy", status.getPostedBy())
-                .add("location.type", status.getLocation().getType())
-                .add("location.lngLat", status.getLocation().getLngLat()).get();
+                .add("hashTags", status.getHashTags()).add("postedBy", status.getPostedBy()).add("location", lngLat)
+                .get();
     }
 
     @Override
@@ -31,18 +37,30 @@ class StatusConverter implements Converter<Status> {
         Date postedOn = basicDBObject.getDate("postedOn");
         ObjectId objectId = basicDBObject.getObjectId("_id");
         String id = objectId.toString();
-
         BasicDBList basicDbList = (BasicDBList) basicDBObject.get("hashTags");
         String[] hashTags = toStringArray(basicDbList);
         String postedBy = basicDBObject.getString("postedBy");
-        String type = basicDBObject.getString("location.type");
-        BasicDBList lngLatList = (BasicDBList) basicDBObject.get("location.lngLat");
-        double[] lngLat = { (Double) lngLatList.get(0), (Double) lngLatList.get(1) };
-        return new Status(id , status, hashTags, postedBy, new Location(Type.type(type), lngLat), postedOn);
+        BasicDBObject locationObj = (BasicDBObject) basicDBObject.get("location");
+        if (locationObj != null) {
+            String type = locationObj.getString("type");
+            BasicDBList lngLatList = (BasicDBList) locationObj.get("lngLat");
+            double[] lngLat = new double[2];
+            if (lngLatList != null) {
+                lngLat[0] = (Double) lngLatList.get(0);
+                lngLat[1] = (Double) lngLatList.get(1);
+            }
+            return new Status(id, status, hashTags, postedBy, new Location(Type.type(type), lngLat), postedOn);
+        }
+
+        return new Status(id, status, hashTags, postedBy, postedOn);
+
     }
 
     private String[] toStringArray(BasicDBList basicDbList) {
         List<String> list = new ArrayList<>();
+        if (basicDbList == null) {
+            return list.toArray(new String[0]);
+        }
         for (Object obj : basicDbList) {
             list.add((String) obj);
         }

@@ -1,5 +1,6 @@
 package com.sharemylocation.domain;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -18,11 +19,11 @@ public class Status {
     private String postedBy;
 
     private Location location;
-    
+
     public Status() {
     }
 
-    public Status(String id ,String status, String[] hashTags, String postedBy, Location location, Date postedOn) {
+    public Status(String id, String status, String[] hashTags, String postedBy, Location location, Date postedOn) {
         super();
         this.id = id;
         this.status = status;
@@ -32,10 +33,19 @@ public class Status {
         this.postedOn = postedOn;
     }
 
+    public Status(String id, String status, String[] hashTags, String postedBy, Date postedOn) {
+        super();
+        this.id = id;
+        this.status = status;
+        this.hashTags = hashTags;
+        this.postedBy = postedBy;
+        this.postedOn = postedOn;
+    }
+
     public void setId(String id) {
         this.id = id;
     }
-    
+
     public String getId() {
         return id;
     }
@@ -43,7 +53,7 @@ public class Status {
     public void setStatus(String status) {
         this.status = status;
     }
-    
+
     public String getStatus() {
         return status;
     }
@@ -55,8 +65,7 @@ public class Status {
     public void setHashTags(String[] hashTags) {
         this.hashTags = hashTags;
     }
-    
-    
+
     public String[] getHashTags() {
         return hashTags;
     }
@@ -64,6 +73,7 @@ public class Status {
     public void setPostedBy(String postedBy) {
         this.postedBy = postedBy;
     }
+
     public String getPostedBy() {
         return postedBy;
     }
@@ -71,9 +81,17 @@ public class Status {
     public void setLocation(Location location) {
         this.location = location;
     }
-    
+
     public Location getLocation() {
         return location;
     }
+
+    @Override
+    public String toString() {
+        return "Status [id=" + id + ", status=" + status + ", postedOn=" + postedOn + ", hashTags="
+                + Arrays.toString(hashTags) + ", postedBy=" + postedBy + ", location=" + location + "]";
+    }
+    
+    
 
 }
