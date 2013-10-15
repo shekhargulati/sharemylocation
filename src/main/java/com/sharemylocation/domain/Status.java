@@ -2,10 +2,13 @@ package com.sharemylocation.domain;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
 public class Status {
 
     private String id;
 
+    @NotNull
     private String status;
 
     private final Date postedOn = new Date();
