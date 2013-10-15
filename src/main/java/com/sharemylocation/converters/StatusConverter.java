@@ -23,7 +23,7 @@ class StatusConverter implements Converter<Status> {
             lngLatList.add(status.getLocation().getLngLat()[0]);
             lngLatList.add(status.getLocation().getLngLat()[1]);
         }
-        DBObject lngLat = BasicDBObjectBuilder.start().add("type", status.getLocation().getType())
+        DBObject lngLat = BasicDBObjectBuilder.start().add("type", status.getLocation().getType().getName())
                 .add("lngLat", lngLatList).get();
         return BasicDBObjectBuilder.start().add("status", status.getStatus()).add("postedOn", status.getPostedOn())
                 .add("hashTags", status.getHashTags()).add("postedBy", status.getPostedBy()).add("location", lngLat)
