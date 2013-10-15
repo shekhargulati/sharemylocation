@@ -2,7 +2,6 @@ package com.sharemylocation.config;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
-import javax.inject.Named;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
@@ -13,7 +12,6 @@ public class MongoConfig {
 
     @Produces
     @ApplicationScoped
-    @Named("db")
     public DB db() {
         try {
             String host = System.getenv("OPENSHIFT_MONGODB_DB_HOST");
@@ -24,7 +22,7 @@ public class MongoConfig {
             MongoClient mongoClient = new MongoClient(new ServerAddress(host, port));
             mongoClient.setWriteConcern(WriteConcern.SAFE);
             DB db = mongoClient.getDB(dbname);
-            if(db.authenticate(username, password.toCharArray())){
+            if (db.authenticate(username, password.toCharArray())) {
                 return db;
             }
             throw new RuntimeException("Not able to authenticate with MongoDB");
