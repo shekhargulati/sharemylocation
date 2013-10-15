@@ -16,26 +16,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
-import com.sharemylocation.converters.Converter;
-import com.sharemylocation.converters.Converters;
+import com.sharemylocation.converters.StatusConverter;
 import com.sharemylocation.dao.ApplicationDao;
 import com.sharemylocation.domain.Status;
 import com.sharemylocation.domain.StatusWithDistance;
 
 @Path("/statuses")
-@SuppressWarnings("unchecked")
 public class StatusRestService {
 
     @Inject
     private ApplicationDao dao;
 
     @Inject
-    private Converters converters;
+    private StatusConverter converter;
 
     @POST
     @Consumes(value = MediaType.APPLICATION_JSON)
     public Response postStatus(@Valid Status status) {
-        Converter<Status> converter = (Converter<Status>) converters.converter("status-converter");
         dao.save(status, converter);
         URI uri = UriBuilder.fromResource(StatusRestService.class).build();
         return Response.created(uri).build();
@@ -44,7 +41,6 @@ public class StatusRestService {
     @GET
     @Produces(value = MediaType.APPLICATION_JSON)
     public List<Status> allStatuses() {
-        Converter<Status> converter = (Converter<Status>) converters.converter("status-converter");
         return dao.findAll(converter);
     }
 
@@ -53,7 +49,6 @@ public class StatusRestService {
     @Path("/{lng}/{lat}")
     public List<Status> findNear(@PathParam("lng") double lng, @PathParam("lat") double lat,
             @QueryParam("hashtags") String hashtagStr, @QueryParam("user") String user) {
-        Converter<Status> converter = (Converter<Status>) converters.converter("status-converter");
 
         String[] hashtags = hashtagStr == null ? null : hashtagStr.split(",");
         return dao.findNear(hashtags, user, new double[] { lng, lat }, converter);
@@ -64,7 +59,6 @@ public class StatusRestService {
     @Path("/geonear/{lng}/{lat}")
     public List<StatusWithDistance> findGeoNear(@PathParam("lng") double lng, @PathParam("lat") double lat,
             @QueryParam("hashtags") String hashtagStr, @QueryParam("user") String user) {
-        Converter<Status> converter = (Converter<Status>) converters.converter("status-converter");
 
         String[] hashtags = hashtagStr == null ? null : hashtagStr.split(",");
         return dao.findGeoNear(hashtags, new double[] { lng, lat }, converter);
