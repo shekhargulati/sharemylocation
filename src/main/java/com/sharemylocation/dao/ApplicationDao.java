@@ -91,9 +91,12 @@ public class ApplicationDao {
         cmd.put("near", geometryObj);
         cmd.put("spherical", true);
         cmd.put("num", 10);
-        BasicDBObject hashTagQuery = new BasicDBObject();
-        hashTagQuery.put("hashTags", new BasicDBObject("$in", hashTags));
-        cmd.put("query", hashTagQuery);
+        if (hashTags != null) {
+            BasicDBObject hashTagQuery = new BasicDBObject();
+            hashTagQuery.put("hashTags", new BasicDBObject("$in", hashTags));
+            cmd.put("query", hashTagQuery);
+        }
+        
         cmd.put("distanceMultiplier", 111);
 
         logger.info("GeoNear Query \n" + cmd.toString());
@@ -101,6 +104,9 @@ public class ApplicationDao {
 
         BasicDBList results = (BasicDBList) commandResult.get("results");
         List<StatusWithDistance> statuses = new ArrayList<>();
+        if(results == null){
+            return statuses;
+        }
 
         for (Object obj : results) {
             BasicDBObject obj2 = (BasicDBObject) obj;
