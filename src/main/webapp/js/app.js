@@ -5,7 +5,9 @@ var Statuses = Backbone.Collection.extend({
 	url : "/api/v1/statuses"
 });
 var SearchResultCollection = Backbone.Collection.extend({
-	url : "/api/v1/statuses/" + this.searchQuery
+	url : function(){
+		return "/api/v1/statuses/" + this.searchQuery;
+	}
 });
 
 
