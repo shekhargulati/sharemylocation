@@ -32,6 +32,7 @@ public class StatusConverter implements Converter<Status> {
                 .add("postedBy", status.getPostedBy());
         if (!lngLat.isEmpty()) {
             builder.add("location", lngLat);
+            builder.add("address", status.getAddress());
         }
         return builder.get();
     }
@@ -46,9 +47,10 @@ public class StatusConverter implements Converter<Status> {
         BasicDBList basicDbList = (BasicDBList) basicDBObject.get("hashTags");
         String[] hashTags = toStringArray(basicDbList);
         String postedBy = basicDBObject.getString("postedBy");
-
+        
         BasicDBObject locationObj = (BasicDBObject) basicDBObject.get("location");
         if (locationObj != null && !locationObj.isEmpty()) {
+            String address = basicDBObject.getString("address");
             String type = locationObj.getString("type");
             BasicDBList lngLatList = (BasicDBList) locationObj.get("coordinates");
             double[] lngLat = new double[2];
@@ -56,7 +58,7 @@ public class StatusConverter implements Converter<Status> {
                 lngLat[0] = (Double) lngLatList.get(0);
                 lngLat[1] = (Double) lngLatList.get(1);
             }
-            return new Status(id, status, hashTags, postedBy, new Location(Type.type(type), lngLat), postedOn);
+            return new Status(id, status, hashTags, postedBy, new Location(Type.type(type), lngLat), postedOn, address);
         }
 
         return new Status(id, status, hashTags, postedBy, postedOn);

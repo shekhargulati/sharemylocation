@@ -1,5 +1,6 @@
 package com.sharemylocation.rest;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.util.List;
 
@@ -16,6 +17,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriBuilder;
 
+import com.google.code.geocoder.Geocoder;
+import com.google.code.geocoder.GeocoderRequestBuilder;
+import com.google.code.geocoder.model.GeocodeResponse;
+import com.google.code.geocoder.model.GeocoderResult;
+import com.google.code.geocoder.model.LatLng;
 import com.sharemylocation.converters.StatusConverter;
 import com.sharemylocation.dao.ApplicationDao;
 import com.sharemylocation.domain.Status;
@@ -33,6 +39,19 @@ public class StatusRestService {
     @POST
     @Consumes(value = MediaType.APPLICATION_JSON)
     public Response postStatus(@Valid Status status) {
+        if (status.getLocation() != null) {
+            Geocoder geocoder = new Geocoder();
+            LatLng latLng = new LatLng(BigDecimal.valueOf(status.getLocation().getCoordinates()[1]),
+                    BigDecimal.valueOf(status.getLocation().getCoordinates()[0]));
+            GeocodeResponse geocodeResponse = geocoder.geocode(new GeocoderRequestBuilder().setLocation(latLng)
+                    .getGeocoderRequest());
+            if (geocodeResponse != null && !geocodeResponse.getResults().isEmpty()) {
+                GeocoderResult geocoderResult = geocodeResponse.getResults().get(0);
+                String formattedAddress = geocoderResult.getFormattedAddress();
+                status.setAddress(formattedAddress);
+            }
+
+        }
         dao.save(status, converter);
         URI uri = UriBuilder.fromResource(StatusRestService.class).build();
         return Response.created(uri).build();

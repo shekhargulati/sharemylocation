@@ -20,6 +20,8 @@ public class Status {
 
     private Location location;
 
+    private String address;
+
     public Status() {
     }
     
@@ -35,7 +37,7 @@ public class Status {
 
 
 
-    public Status(String id, String status, String[] hashTags, String postedBy, Location location, Date postedOn) {
+    public Status(String id, String status, String[] hashTags, String postedBy, Location location, Date postedOn, String address) {
         super();
         this.id = id;
         this.status = status;
@@ -43,6 +45,7 @@ public class Status {
         this.postedBy = postedBy;
         this.location = location;
         this.postedOn = postedOn;
+        this.address = address;
     }
 
     public Status(String id, String status, String[] hashTags, String postedBy, Date postedOn) {
@@ -103,7 +106,16 @@ public class Status {
         return "Status [id=" + id + ", status=" + status + ", postedOn=" + postedOn + ", hashTags="
                 + Arrays.toString(hashTags) + ", postedBy=" + postedBy + ", location=" + location + "]";
     }
+
+
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
     
+    public String getAddress() {
+        return address;
+    }
     
 
 }
