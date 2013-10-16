@@ -48,10 +48,6 @@ body {
 
 	<script type="text/template" id="status-list-template">
 		
-		<hr>
-			<h2>Search Results</h2>
-			<hr>
-				
 			<% _.each(statuses , function(status) {%>
 				<div class="list-group">		
 					<a href="#statuses/<%= status.get('id') %>" class="list-group-item active">
@@ -71,9 +67,6 @@ body {
 	</script>
 
 	<script type="text/template" id="status-geonear-list-template">
-			<hr>
-			<h2>Search Results</h2>
-			<hr>	
 			<% _.each(statuses , function(statusWithDistance) {%>
 				<div class="list-group">		
 					<a href="#statuses/<%= statusWithDistance.attributes.status.id %>" class="list-group-item active">
