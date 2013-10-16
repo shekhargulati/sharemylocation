@@ -48,14 +48,15 @@ var SearchView = Backbone.View.extend({
 function searchViewCallback(latitude , longitude , options){
 	var searchResults = new SearchResultCollection();
 	var query = longitude + "/" +latitude + "/?"+ "hashtags="+options.hashtags+"&user="+options.postedBy;
+	if(options.useGeoNear){
+		query = "geonear/" + query;
+	}
 	console.log("Search Query : "+query);
 	searchResults.searchQuery = query;
 	var that = this;
 	searchResults.fetch({
 		success : function(statuses) {
-			var template = _.template($("#status-list-template").html(), {
-				statuses : statuses.models
-			});
+			var template = options.useGeoNear ? _.template($("#status-geonear-list-template").html(), {statuses : statuses.models}) : _.template($("#status-list-template").html(), {statuses : statuses.models});
 			$("#results").html(template);
 			$("#searchForm").unmask();
 		}, error : function(){

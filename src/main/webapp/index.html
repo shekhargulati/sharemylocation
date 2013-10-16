@@ -70,6 +70,29 @@ body {
 		
 	</script>
 	
+	<script type="text/template" id="status-geonear-list-template">
+		
+		
+				
+			<% _.each(statuses , function(statusWithDistance) {%>
+				<div class="list-group">		
+					<a href="#statuses/<%= statusWithDistance.get('status').get('id') %>" class="list-group-item active">
+    					<h4 class="list-group-item-heading"><%= statusWithDistance.get('status').get('status') %></h4>
+						<h4 class="list-group-item-heading"><%= statusWithDistance.get('distance') Km %></h4>
+    					<p class="list-group-item-text">By <%= statusWithDistance.get('status').get('postedBy') %> at <%= statusWithDistance.get('status').get('address') %>
+							<% _.each(statusWithDistance.get('status').get('hashTags') , function(hashTag) {%>
+								<span class="label label-default"><%= hashTag %></span>
+							<%});%>
+						<span class="text-right"><%= $.timeago(statusWithDistance.get('status').get('postedOn'))%></span>
+						</p>
+						
+						
+  					</a>
+				</div>
+			<%});%>
+		
+	</script>
+	
 	<script type="text/template" id="search-status-template">
 		<form id="searchForm" class="form-horizontal" role="form">
 				<div class="form-group">
