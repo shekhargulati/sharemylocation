@@ -15,6 +15,7 @@ var PostView = Backbone.View.extend({
 	postStatus : function(event){
 		event.preventDefault();
 		console.log("In postStatus()... ");
+		$("#postForm").mask("Posting status ...");
 		var status = $("textarea#status").val();
 		var postedBy = $("#postedBy").val();
 		var useCurrentLocation = $('#useCurrentLocation').is(":checked") ? true : false;
@@ -30,9 +31,11 @@ var PostView = Backbone.View.extend({
 			model.save(obj , {
 				success : function(model, response, options){
 					console.log("Post successfully saved without location.."+model);
+					$("#postForm").unmask();
 					app.navigate("#",{trigger:true});
 				},error : function(model, xhr, options){
 					console.log("Save Error");
+					$("#postForm").unmask();
 				}
 			});
 		}
@@ -52,6 +55,7 @@ function getCurrentPosition(callback , status , postedBy){
 			    	var latitude = position.coords.latitude;
 			    	callback(latitude , longitude , status , postedBy);
 				}, function(e){
+					$("#postForm").unmask();
 					switch (e.code) {
 						case e.PERMISSION_DENIED:
 							alert('You have denied access to your position. You will ' +
@@ -88,9 +92,11 @@ function callback(latitude , longitude , status , postedBy){
 	model.save(obj , {
 		success : function(model, response, options){
 			console.log("Post successfully saved without location.."+model);
+			$("#postForm").unmask();
 			app.navigate("#",{trigger:true});
 		},error : function(model, xhr, options){
 			console.log("Save Error");
+			$("#postForm").unmask();
 		}
 	});
 }
