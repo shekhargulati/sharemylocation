@@ -1,5 +1,7 @@
 package com.sharemylocation.config;
 
+import java.util.logging.Logger;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
@@ -12,9 +14,12 @@ import com.mongodb.WriteConcern;
 @ApplicationScoped
 public class MongoConfig {
 
+    private Logger logger = Logger.getLogger(this.getClass().getName());
+    
     @Produces
     public DB db() {
         try {
+            logger.info("Creating MongoDB instance...");
             String host = System.getenv("OPENSHIFT_MONGODB_DB_HOST");
             int port = Integer.parseInt(System.getenv("OPENSHIFT_MONGODB_DB_PORT"));
             String dbname = System.getenv("OPENSHIFT_APP_NAME");
