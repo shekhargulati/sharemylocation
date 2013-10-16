@@ -27,8 +27,8 @@ var PostView = Backbone.View.extend({
 				status : status,
 				postedBy : postedBy,
 			};
-			
-			status.save(obj , {
+			var model = new Status();
+			model.save(obj , {
 				success : function(){
 					console.log("Post successfully saved without location..");
 					app.navigate("#",{trigger:true});
@@ -82,7 +82,8 @@ function callback(latitude , longitude , status , postedBy){
 				coordinates : [longitude , latitude]
 			}
 		};
-	status.save(obj, {
+	var model = new Status();
+	model.save(obj, {
 		success : function(){
 			console.log("Post successfully saved..");
 			app.navigate("#",{trigger:true});
