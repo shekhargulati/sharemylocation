@@ -5,6 +5,7 @@ import javax.enterprise.inject.Produces;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientOptions;
 import com.mongodb.ServerAddress;
 import com.mongodb.WriteConcern;
 
@@ -19,7 +20,8 @@ public class MongoConfig {
             String dbname = System.getenv("OPENSHIFT_APP_NAME");
             String username = System.getenv("OPENSHIFT_MONGODB_DB_USERNAME");
             String password = System.getenv("OPENSHIFT_MONGODB_DB_PASSWORD");
-            MongoClient mongoClient = new MongoClient(new ServerAddress(host, port));
+            MongoClientOptions mongoClientOptions = MongoClientOptions.builder().connectionsPerHost(20).build();
+            MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), mongoClientOptions);
             mongoClient.setWriteConcern(WriteConcern.SAFE);
             DB db = mongoClient.getDB(dbname);
             if (db.authenticate(username, password.toCharArray())) {
