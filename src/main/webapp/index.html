@@ -42,15 +42,15 @@ body {
 
 		<hr>
 
-		<div class="page">
-			
-		</div>
+		<div class="page"></div>
 
 	</div>
 
 	<script type="text/template" id="status-list-template">
 		
-		
+		<hr>
+			<h2>Search Results</h2>
+			<hr>
 				
 			<% _.each(statuses , function(status) {%>
 				<div class="list-group">		
@@ -69,18 +69,18 @@ body {
 			<%});%>
 		
 	</script>
-	
+
 	<script type="text/template" id="status-geonear-list-template">
-		
-		
-				
+			<hr>
+			<h2>Search Results</h2>
+			<hr>	
 			<% _.each(statuses , function(statusWithDistance) {%>
 				<div class="list-group">		
 					<a href="#statuses/<%= statusWithDistance.attributes.status.id %>" class="list-group-item active">
     					<h4 class="list-group-item-heading"><%= statusWithDistance.attributes.status.status %></h4>
+						<h6><%= statusWithDistance.attributes.distance %>Km(s)</h6>
     					<p class="list-group-item-text">
 							By <%= statusWithDistance.attributes.status.postedBy %> at <%= statusWithDistance.attributes.status.address %>
-							<%= statusWithDistance.attributes.distance %>Km(s)
 							<% _.each(statusWithDistance.attributes.status.hashTags , function(hashTag) {%>
 								<span class="label label-default"><%= hashTag %></span>
 							<%});%>
@@ -93,7 +93,7 @@ body {
 			<%});%>
 		
 	</script>
-	
+
 	<script type="text/template" id="search-status-template">
 		<form id="searchForm" class="form-horizontal" role="form">
 				<div class="form-group">
@@ -165,8 +165,8 @@ body {
 	<script type="text/javascript" src="js/jquery.timeago.js"></script>
 	<script type="text/javascript" src="js/jquery.loadmask.min.js"></script>
 	<script type="text/javascript">
-		$('.nav-pills a').click(function (e) {
-		    $(this).tab('show');
+		$('.nav-pills a').click(function(e) {
+			$(this).tab('show');
 		});
 	</script>
 	<script type="text/javascript" src="js/app.js"></script>
