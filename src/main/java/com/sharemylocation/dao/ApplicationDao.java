@@ -43,7 +43,8 @@ public class ApplicationDao {
 
     public <T> List<T> findAll(Converter<T> converter) {
         DBCollection statusCollection = db.getCollection("statuses");
-        DBCursor dbCursor = statusCollection.find();
+
+        DBCursor dbCursor = statusCollection.find().sort(new BasicDBObject("postedOn", -1)).limit(50);
         return toList(dbCursor, converter);
     }
 
@@ -96,7 +97,7 @@ public class ApplicationDao {
             hashTagQuery.put("hashTags", new BasicDBObject("$in", hashTags));
             cmd.put("query", hashTagQuery);
         }
-        
+
         cmd.put("distanceMultiplier", 111);
 
         logger.info("GeoNear Query \n" + cmd.toString());
@@ -104,7 +105,7 @@ public class ApplicationDao {
 
         BasicDBList results = (BasicDBList) commandResult.get("results");
         List<StatusWithDistance> statuses = new ArrayList<>();
-        if(results == null){
+        if (results == null) {
             return statuses;
         }
 

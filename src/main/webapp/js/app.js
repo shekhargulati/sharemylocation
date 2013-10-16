@@ -18,7 +18,7 @@ var PostView = Backbone.View.extend({
 		var status = $("textarea#status").val();
 		var postedBy = $("#postedBy").val();
 		var useCurrentLocation = $('#useCurrentLocation').is(":checked") ? true : false;
-		alert(status + postedBy + useCurrentLocation);
+//		alert(status + postedBy + useCurrentLocation);
 		
 		if(useCurrentLocation){
 			console.log("before save123");
@@ -35,9 +35,7 @@ var PostView = Backbone.View.extend({
 					console.log("Post successfully saved without location.."+model);
 					app.navigate("#",{trigger:true});
 				},error : function(model, xhr, options){
-					console.log("Error");
-					console.log("Error"+xhr);
-					console.log("Error"+options);
+					console.log("Save Error");
 				}
 			});
 		}
@@ -89,10 +87,13 @@ function callback(latitude , longitude , status , postedBy){
 			}
 		};
 	var model = new Status();
-	model.save(obj, {
-		success : function(status){
-			console.log("Post successfully saved.."+status);
+	console.log("before save");
+	model.save(obj , {
+		success : function(model, response, options){
+			console.log("Post successfully saved without location.."+model);
 			app.navigate("#",{trigger:true});
+		},error : function(model, xhr, options){
+			console.log("Save Error");
 		}
 	});
 }

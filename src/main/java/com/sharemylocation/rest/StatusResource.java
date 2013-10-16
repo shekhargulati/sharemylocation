@@ -1,7 +1,6 @@
 package com.sharemylocation.rest;
 
 import java.math.BigDecimal;
-import java.net.URI;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,7 +14,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriBuilder;
 
 import com.google.code.geocoder.Geocoder;
 import com.google.code.geocoder.GeocoderRequestBuilder;
@@ -28,7 +26,7 @@ import com.sharemylocation.domain.Status;
 import com.sharemylocation.domain.StatusWithDistance;
 
 @Path("/statuses")
-public class StatusRestService {
+public class StatusResource {
 
     @Inject
     private ApplicationDao dao;
@@ -53,7 +51,6 @@ public class StatusRestService {
 
         }
         dao.save(status, converter);
-        URI uri = UriBuilder.fromResource(StatusRestService.class).build();
         return Response.ok(status).build();
     }
 
