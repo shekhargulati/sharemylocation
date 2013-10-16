@@ -4,8 +4,8 @@ import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.inject.Produces;
 import javax.inject.Named;
-import javax.ws.rs.Produces;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
