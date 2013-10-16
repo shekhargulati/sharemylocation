@@ -85,11 +85,8 @@ public class ApplicationDao {
 
     public List<StatusWithDistance> findGeoNear(String[] hashTags, double[] lngLat, Converter<Status> converter) {
         BasicDBObject cmd = new BasicDBObject();
-        BasicDBObject geometryObj = new BasicDBObject("type", "Point");
-        geometryObj.append("coordinates", lngLat);
-
         cmd.put("geoNear", "statuses");
-        cmd.put("near", geometryObj);
+        cmd.put("near", lngLat);
         cmd.put("spherical", true);
         cmd.put("num", 10);
         if (hashTags != null && hashTags.length >0) {
@@ -140,9 +137,8 @@ public class ApplicationDao {
 
         System.out.println(nearStatuses);
 
-//        List<StatusWithDistance> geoNearStatuses = dao.findGeoNear(hashTags, lngLat, converter);
-//
-//        System.out.println(geoNearStatuses);
+        List<StatusWithDistance> geoNearStatuses = dao.findGeoNear(hashTags, lngLat, converter);
+        System.out.println(geoNearStatuses);
 
     }
 }
