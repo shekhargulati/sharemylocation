@@ -5,6 +5,25 @@ var Statuses = Backbone.Collection.extend({
 	url : "/api/v1/statuses"
 });
 
+var SearchView = Backbone.View.extend({
+	el : ".page",
+	
+	events : {
+		"submit #searchForm" : searchStatus
+	},
+	
+	searchStatus : function(event){
+		event.preventDefault();
+		console.log("In searchStatus()... ");
+	},
+	
+	render : function(){
+		var template = _.template($("#search-status-template").html() , {});
+		this.$el.html(template);
+	}
+
+});
+
 var PostView = Backbone.View.extend({
 	el : ".page",
 	
@@ -130,6 +149,7 @@ var Router = Backbone.Router.extend({
 
 var homeView = new HomeView();
 var postView = new PostView();
+var searchView = new SearchView();
 
 var app = new Router();
 
