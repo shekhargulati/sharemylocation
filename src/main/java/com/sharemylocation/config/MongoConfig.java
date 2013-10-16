@@ -2,8 +2,10 @@ package com.sharemylocation.config;
 
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
+import javax.inject.Named;
+import javax.ws.rs.Produces;
 
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
@@ -15,9 +17,11 @@ import com.mongodb.WriteConcern;
 public class MongoConfig {
 
     private Logger logger = Logger.getLogger(this.getClass().getName());
-    
-    @Produces
-    public DB db() {
+
+    private DB db;
+
+    @PostConstruct
+    void constructMongoDBInstance() {
         try {
             logger.info("Creating MongoDB instance...");
             String host = System.getenv("OPENSHIFT_MONGODB_DB_HOST");
@@ -30,11 +34,17 @@ public class MongoConfig {
             mongoClient.setWriteConcern(WriteConcern.SAFE);
             DB db = mongoClient.getDB(dbname);
             if (db.authenticate(username, password.toCharArray())) {
-                return db;
+                this.db = db;
             }
             throw new RuntimeException("Not able to authenticate with MongoDB");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Produces
+    @Named
+    public DB db() {
+        return this.db;
     }
 }
