@@ -127,7 +127,7 @@ public class ApplicationDao {
         dao.db = db;
 
         Converter<Status> converter = new StatusConverter();
-        String[] hashTags = new String[] { "hello" };
+        String[] hashTags = new String[0];
         String postedBy = "Shekhar Gulati";
         double[] lngLat = new double[] { 27, 90 };
         dao.save(new Status("hello how are you", hashTags, postedBy, new Location(Type.POINT, lngLat)), converter);
@@ -140,9 +140,9 @@ public class ApplicationDao {
 
         System.out.println(nearStatuses);
 
-        List<StatusWithDistance> geoNearStatuses = dao.findGeoNear(hashTags, lngLat, converter);
-
-        System.out.println(geoNearStatuses);
+//        List<StatusWithDistance> geoNearStatuses = dao.findGeoNear(hashTags, lngLat, converter);
+//
+//        System.out.println(geoNearStatuses);
 
     }
 }

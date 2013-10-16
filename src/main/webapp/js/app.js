@@ -57,6 +57,10 @@ function searchViewCallback(latitude , longitude , options){
 				statuses : statuses.models
 			});
 			$("#results").html(template);
+			$("#searchForm").unmask();
+		}, error : function(){
+			console.log("Error in getting search results...");
+			$("#searchForm").unmask();
 		}
 	});
 }
