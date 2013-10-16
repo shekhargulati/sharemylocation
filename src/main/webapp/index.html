@@ -35,8 +35,8 @@ body {
 
 			</div>
 			<ul class="nav nav-pills navbar-inverse nav-justified">
-				<li class="active"><a href="#" data-toggle="tab">Home</a></li>
-				<li><a href="#search" data-toggle="tab">Search</a></li>
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="#search">Search</a></li>
 			</ul>
 		</nav>
 
@@ -135,6 +135,11 @@ body {
 	<script type="text/javascript" src="js/backbone-min.js"></script>
 	<script type="text/javascript" src="js/jquery.timeago.js"></script>
 	<script type="text/javascript" src="js/jquery.loadmask.min.js"></script>
+	<script type="text/javascript">
+		$('.nav-pills a').click(function (e) {
+		    $(this).tab('show');
+		});
+	</script>
 	<script type="text/javascript" src="js/app.js"></script>
 </body>
 </html>
