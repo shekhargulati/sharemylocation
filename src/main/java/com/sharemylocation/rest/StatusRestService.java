@@ -54,7 +54,7 @@ public class StatusRestService {
         }
         dao.save(status, converter);
         URI uri = UriBuilder.fromResource(StatusRestService.class).build();
-        return Response.created(null).build();
+        return Response.ok(status).build();
     }
 
     @GET

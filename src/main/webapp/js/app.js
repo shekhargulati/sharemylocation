@@ -31,9 +31,13 @@ var PostView = Backbone.View.extend({
 			var model = new Status();
 			console.log("before save");
 			model.save(obj , {
-				success : function(status){
-					console.log("Post successfully saved without location.."+status);
+				success : function(model, response, options){
+					console.log("Post successfully saved without location.."+model);
 					app.navigate("#",{trigger:true});
+				},error : function(model, xhr, options){
+					console.log("Error");
+					console.log("Error"+xhr);
+					console.log("Error"+options);
 				}
 			});
 		}
