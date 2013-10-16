@@ -76,15 +76,15 @@ body {
 				
 			<% _.each(statuses , function(statusWithDistance) {%>
 				<div class="list-group">		
-					<a href="#statuses/<%= statusWithDistance.get('status').get('id') %>" class="list-group-item active">
-    					<h4 class="list-group-item-heading"><%= statusWithDistance.get('status').get('status') %></h4>
+					<a href="#statuses/<%= statusWithDistance.attributes.status.id %>" class="list-group-item active">
+    					<h4 class="list-group-item-heading"><%= statusWithDistance.attributes.status.status %></h4>
     					<p class="list-group-item-text">
-							By <%= statusWithDistance.get('status').get('postedBy') %> at <%= statusWithDistance.get('status').get('address') %>
-							<%= statusWithDistance.get('distance') %>Km(s)
-							<% _.each(statusWithDistance.get('status').get('hashTags') , function(hashTag) {%>
+							By <%= statusWithDistance.attributes.status.postedBy %> at <%= statusWithDistance.attributes.status.address %>
+							<%= statusWithDistance.attributes.distance %>Km(s)
+							<% _.each(statusWithDistance.attributes.status.hashTags , function(hashTag) {%>
 								<span class="label label-default"><%= hashTag %></span>
 							<%});%>
-						<span class="text-right"><%= $.timeago(statusWithDistance.get('status').get('postedOn'))%></span>
+						<span class="text-right"><%= $.timeago(statusWithDistance.attributes.status.postedOn)%></span>
 						</p>
 						
 						
