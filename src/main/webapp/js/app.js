@@ -4,6 +4,11 @@ var Status = Backbone.Model.extend({
 var Statuses = Backbone.Collection.extend({
 	url : "/api/v1/statuses"
 });
+var SearchResultCollection = Backbone.Collection.extend({
+	url : "/api/v1/statuses/" + this.searchQuery
+});
+
+
 
 var SearchView = Backbone.View.extend({
 	el : ".page",
@@ -15,7 +20,20 @@ var SearchView = Backbone.View.extend({
 	searchStatus : function(event){
 		event.preventDefault();
 		console.log("In searchStatus()... ");
-		$("#searchForm").mask("Posting status ...");
+		$("#searchForm").mask("Searching statuses ...");
+		var hashtags = $("textarea#hashtags").val();
+		var postedBy = $("#postedBy").val();
+		var useGeoNear = $('#useGeoNear').is(":checked") ? true : false;
+		
+		var options = {
+				hashtags : hashtags,
+				postedBy : postedBy,
+				useGeoNear : useGeoNear,
+				formName : "#searchForm"
+		};
+		
+		getCurrentPosition(searchViewCallback ,options);
+		
 	},
 	
 	render : function(){
@@ -24,6 +42,22 @@ var SearchView = Backbone.View.extend({
 	}
 
 });
+
+function searchViewCallback(latitude , longitude , options){
+	var searchResults = new SearchResultCollection();
+	var query = longitude + "/" +latitude + "/?"+ "hashtags="+options.hashtags+"&user="+options.postedBy;
+	console.log("Search Query : "+query);
+	searchResults.searchQuery = query;
+	var that = this;
+	searchResults.fetch({
+		success : function(statuses) {
+			var template = _.template($("#status-list-template").html(), {
+				statuses : statuses.models
+			});
+			that.$el.html(template);
+		}
+	});
+}
 
 var PostView = Backbone.View.extend({
 	el : ".page",
@@ -41,7 +75,12 @@ var PostView = Backbone.View.extend({
 		var useCurrentLocation = $('#useCurrentLocation').is(":checked") ? true : false;
 		
 		if(useCurrentLocation){
-			getCurrentPosition(callback , status , postedBy);
+			var options = {
+					status : status,
+					postedBy : postedBy,
+					formName : "#postForm"
+			};
+			getCurrentPosition(postViewCallback ,options);
 		}else{
 			var obj = {
 				status : status,
@@ -67,15 +106,15 @@ var PostView = Backbone.View.extend({
 	}
 });
 
-function getCurrentPosition(callback , status , postedBy){
+function getCurrentPosition(callback , options){
 
 	navigator.geolocation.getCurrentPosition(function(position){
 
 					var longitude = position.coords.longitude;
 			    	var latitude = position.coords.latitude;
-			    	callback(latitude , longitude , status , postedBy);
+			    	callback(latitude , longitude , options);
 				}, function(e){
-					$("#postForm").unmask();
+					$(options.formName).unmask();
 					switch (e.code) {
 						case e.PERMISSION_DENIED:
 							alert('You have denied access to your position. You will ' +
@@ -98,10 +137,10 @@ function getCurrentPosition(callback , status , postedBy){
 				);
 }
 
-function callback(latitude , longitude , status , postedBy){
+function postViewCallback(latitude , longitude , options){
 	var obj = {
-			status : status,
-			postedBy : postedBy,
+			status : options.status,
+			postedBy : options.postedBy,
 			location : {
 				type : "POINT",
 				coordinates : [longitude , latitude]
@@ -111,7 +150,7 @@ function callback(latitude , longitude , status , postedBy){
 	console.log("before save");
 	model.save(obj , {
 		success : function(model, response, options){
-			console.log("Post successfully saved without location.."+model);
+			console.log("Post successfully saved with location.."+model);
 			$("#postForm").unmask();
 			app.navigate("#",{trigger:true});
 		},error : function(model, xhr, options){
