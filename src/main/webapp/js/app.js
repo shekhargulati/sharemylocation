@@ -21,6 +21,7 @@ var PostView = Backbone.View.extend({
 		alert(status + postedBy + useCurrentLocation);
 		
 		if(useCurrentLocation){
+			console.log("before save123");
 			getCurrentPosition(callback , status , postedBy);
 		}else{
 			var obj = {
@@ -28,9 +29,10 @@ var PostView = Backbone.View.extend({
 				postedBy : postedBy,
 			};
 			var model = new Status();
+			console.log("before save");
 			model.save(obj , {
-				success : function(){
-					console.log("Post successfully saved without location..");
+				success : function(status){
+					console.log("Post successfully saved without location.."+status);
 					app.navigate("#",{trigger:true});
 				}
 			});
@@ -84,8 +86,8 @@ function callback(latitude , longitude , status , postedBy){
 		};
 	var model = new Status();
 	model.save(obj, {
-		success : function(){
-			console.log("Post successfully saved..");
+		success : function(status){
+			console.log("Post successfully saved.."+status);
 			app.navigate("#",{trigger:true});
 		}
 	});
