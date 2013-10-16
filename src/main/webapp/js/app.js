@@ -15,6 +15,7 @@ var SearchView = Backbone.View.extend({
 	searchStatus : function(event){
 		event.preventDefault();
 		console.log("In searchStatus()... ");
+		$("#searchForm").mask("Posting status ...");
 	},
 	
 	render : function(){
