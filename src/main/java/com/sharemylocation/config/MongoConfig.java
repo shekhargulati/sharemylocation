@@ -35,8 +35,9 @@ public class MongoConfig {
             DB db = mongoClient.getDB(dbname);
             if (db.authenticate(username, password.toCharArray())) {
                 this.db = db;
+            } else {
+                throw new RuntimeException("Not able to authenticate with MongoDB");
             }
-            throw new RuntimeException("Not able to authenticate with MongoDB");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
