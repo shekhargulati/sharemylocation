@@ -9,7 +9,7 @@ var PostView = Backbone.View.extend({
 	el : ".page",
 	
 	events : {
-		"click .post-form" : "postStatus"
+		"submit #postForm" : "postStatus"
 	},
 	
 	postStatus : function(event){
@@ -23,14 +23,15 @@ var PostView = Backbone.View.extend({
 		if(useCurrentLocation){
 			getCurrentPosition(callback , status , postedBy);
 		}else{
-			var status = new Status({
+			var obj = {
 				status : status,
 				postedBy : postedBy,
-			});
+			};
 			
-			status.save({
+			status.save(obj , {
 				success : function(){
-					alert("Successfully posted status");
+					console.log("Post successfully saved without location..");
+					app.navigate("#",{trigger:true});
 				}
 			});
 		}
@@ -73,18 +74,18 @@ function getCurrentPosition(callback , status , postedBy){
 }
 
 function callback(latitude , longitude , status , postedBy){
-	var status = new Status({
-		status : status,
-		postedBy : postedBy,
-		location : {
-			type : "POINT",
-			coordinates : [longitude , latitude]
-		}
-	});
-	
-	status.save({
+	var obj = {
+			status : status,
+			postedBy : postedBy,
+			location : {
+				type : "POINT",
+				coordinates : [longitude , latitude]
+			}
+		};
+	status.save(obj, {
 		success : function(){
-			alert("Successfully posted status");
+			console.log("Post successfully saved..");
+			app.navigate("#",{trigger:true});
 		}
 	});
 }
