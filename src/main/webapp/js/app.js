@@ -1,8 +1,8 @@
 var Status = Backbone.Model.extend({
-	urlRoot : "http://sharemylocation-shekhargulati.rhcloud.com/api/v1/statuses"
+	urlRoot : "/api/v1/statuses"
 });
 var Statuses = Backbone.Collection.extend({
-	url : "http://sharemylocation-shekhargulati.rhcloud.com/api/v1/statuses"
+	url : "/api/v1/statuses"
 });
 
 var PostView = Backbone.View.extend({
