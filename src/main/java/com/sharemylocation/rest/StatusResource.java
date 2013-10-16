@@ -24,6 +24,7 @@ import com.sharemylocation.converters.StatusConverter;
 import com.sharemylocation.dao.ApplicationDao;
 import com.sharemylocation.domain.Status;
 import com.sharemylocation.domain.StatusWithDistance;
+import com.twitter.Extractor;
 
 @Path("/statuses")
 public class StatusResource {
@@ -48,8 +49,11 @@ public class StatusResource {
                 String formattedAddress = geocoderResult.getFormattedAddress();
                 status.setAddress(formattedAddress);
             }
-
         }
+        Extractor extractor = new Extractor();
+        List<String> hashtags = extractor.extractHashtags(status.getStatus());
+        status.setHashTags(hashtags.toArray(new String[0]));
+
         dao.save(status, converter);
         return Response.ok(status).build();
     }

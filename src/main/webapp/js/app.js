@@ -18,10 +18,8 @@ var PostView = Backbone.View.extend({
 		var status = $("textarea#status").val();
 		var postedBy = $("#postedBy").val();
 		var useCurrentLocation = $('#useCurrentLocation').is(":checked") ? true : false;
-//		alert(status + postedBy + useCurrentLocation);
 		
 		if(useCurrentLocation){
-			console.log("before save123");
 			getCurrentPosition(callback , status , postedBy);
 		}else{
 			var obj = {
@@ -29,7 +27,6 @@ var PostView = Backbone.View.extend({
 				postedBy : postedBy,
 			};
 			var model = new Status();
-			console.log("before save");
 			model.save(obj , {
 				success : function(model, response, options){
 					console.log("Post successfully saved without location.."+model);
