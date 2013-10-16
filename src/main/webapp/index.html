@@ -59,9 +59,10 @@ body {
 							<% _.each(status.get('hashTags') , function(hashTag) {%>
 								<span class="label label-default"><%= hashTag %></span>
 							<%});%>
+						<span class="text-right"><%= $.timeago(status.get('postedOn'))%></span>
 						</p>
 						
-						<p class="text-right"><%= $.timeago(status.get('postedOn'))%></p>
+						
   					</a>
 				</div>
 			<%});%>
