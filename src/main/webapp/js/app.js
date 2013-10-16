@@ -122,22 +122,25 @@ var Router = Backbone.Router.extend({
 		"search" : "search"
 	},
 
-	home : function() {
-		console.log("Show home page");
-		var homeView = new HomeView();
-		homeView.render();
-	},
-
-	post : function() {
-		console.log("Show post page");
-		var postView = new PostView();
-		postView.render();
-	},
-
-	search : function() {
-		console.log("Show search page");
-	}
 });
 
+
+var homeView = new HomeView();
+var postView = new PostView();
+
 var app = new Router();
+
+app.on("route:home", function(){
+	console.log("Show home page");
+	homeView.render();
+});
+
+app.on("route:post", function(){
+	console.log("Show post page");
+	postView.render();
+});
+
+app.on("route:search", function(){
+	console.log("Show search page");
+});
 Backbone.history.start();
