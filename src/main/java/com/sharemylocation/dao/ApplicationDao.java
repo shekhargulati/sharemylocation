@@ -69,11 +69,11 @@ public class ApplicationDao {
         query.append("$near", geometryQuery);
         cmd.append("location", query);
 
-        if (hashTags != null) {
+        if (hashTags != null && hashTags.length >0) {
             cmd.append("hashTags", new BasicDBObject("$in", hashTags));
         }
 
-        if (postedBy != null) {
+        if (postedBy != null && postedBy != "") {
             cmd.put("postedBy", postedBy);
         }
 
@@ -92,7 +92,7 @@ public class ApplicationDao {
         cmd.put("near", geometryObj);
         cmd.put("spherical", true);
         cmd.put("num", 10);
-        if (hashTags != null) {
+        if (hashTags != null && hashTags.length >0) {
             BasicDBObject hashTagQuery = new BasicDBObject();
             hashTagQuery.put("hashTags", new BasicDBObject("$in", hashTags));
             cmd.put("query", hashTagQuery);

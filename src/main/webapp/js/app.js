@@ -56,7 +56,7 @@ function searchViewCallback(latitude , longitude , options){
 			var template = _.template($("#status-list-template").html(), {
 				statuses : statuses.models
 			});
-			that.$el.html(template);
+			$("#results").html(template);
 		}
 	});
 }
