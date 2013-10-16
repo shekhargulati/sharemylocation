@@ -35,8 +35,8 @@ body {
 
 			</div>
 			<ul class="nav nav-pills navbar-inverse nav-justified">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="#search">Search</a></li>
+				<li class="active"><a href="#" data-toggle="tab">Home</a></li>
+				<li><a href="#search" data-toggle="tab">Search</a></li>
 			</ul>
 		</nav>
 
@@ -73,13 +73,11 @@ body {
 	<script type="text/template" id="search-status-template">
 		<form id="searchForm" class="form-horizontal" role="form">
 				<div class="form-group">
-					<label for="hashtags" class="col-lg-2 control-label">HashTags</label>
 					<div class="col-lg-10">
 						<textarea id="hashtags" name="status" class="form-control" placeholder="Comma seperated list of hashtags"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="name" class="col-lg-2 control-label">Name</label>
 					<div class="col-lg-10">
 						<input type="text" class="form-control" id="postedBy"
 							placeholder="User name">
@@ -95,7 +93,7 @@ body {
 				</div>
 				<div class="form-group">
 					<div class="col-lg-offset-2 col-lg-10">
-						<button type="submit" class="btn btn-success btn-lg">Search Status</button>
+						<button type="submit" class="btn btn-primary btn-lg">Search Status</button>
 					</div>
 				</div>
 			</form>
