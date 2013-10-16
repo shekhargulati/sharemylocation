@@ -95,7 +95,7 @@ public class ApplicationDao {
             cmd.put("query", hashTagQuery);
         }
 
-        cmd.put("distanceMultiplier", 111);
+        cmd.put("distanceMultiplier", 6371);
 
         logger.info("GeoNear Query \n" + cmd.toString());
         CommandResult commandResult = db.command(cmd);
