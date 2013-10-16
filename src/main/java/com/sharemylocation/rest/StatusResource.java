@@ -80,7 +80,7 @@ public class StatusResource {
     public List<StatusWithDistance> findGeoNear(@PathParam("lng") double lng, @PathParam("lat") double lat,
             @QueryParam("hashtags") String hashtagStr, @QueryParam("user") String user) {
 
-        String[] hashtags = hashtagStr == null ? null : hashtagStr.split(",");
+        String[] hashtags = (hashtagStr == null || hashtagStr == "") ? null : hashtagStr.split(",");
         return dao.findGeoNear(hashtags, new double[] { lng, lat }, converter);
     }
 }
