@@ -5,7 +5,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 @Path("/ping")
-public class PingRestService {
+public class PingResource {
 
     @GET
     @Produces(value = "application/json")
