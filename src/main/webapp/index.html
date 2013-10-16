@@ -78,8 +78,9 @@ body {
 				<div class="list-group">		
 					<a href="#statuses/<%= statusWithDistance.get('status').get('id') %>" class="list-group-item active">
     					<h4 class="list-group-item-heading"><%= statusWithDistance.get('status').get('status') %></h4>
-						<h4 class="list-group-item-heading"><%= statusWithDistance.get('distance') Km %></h4>
-    					<p class="list-group-item-text">By <%= statusWithDistance.get('status').get('postedBy') %> at <%= statusWithDistance.get('status').get('address') %>
+    					<p class="list-group-item-text">
+							By <%= statusWithDistance.get('status').get('postedBy') %> at <%= statusWithDistance.get('status').get('address') %>
+							<%= statusWithDistance.get('distance') %>Km(s)
 							<% _.each(statusWithDistance.get('status').get('hashTags') , function(hashTag) {%>
 								<span class="label label-default"><%= hashTag %></span>
 							<%});%>
