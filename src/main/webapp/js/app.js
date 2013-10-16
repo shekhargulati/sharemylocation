@@ -9,7 +9,7 @@ var SearchView = Backbone.View.extend({
 	el : ".page",
 	
 	events : {
-		"submit #searchForm" : searchStatus
+		"submit #searchForm" : "searchStatus"
 	},
 	
 	searchStatus : function(event){
@@ -165,5 +165,6 @@ app.on("route:post", function(){
 
 app.on("route:search", function(){
 	console.log("Show search page");
+	searchView.render();
 });
 Backbone.history.start();
