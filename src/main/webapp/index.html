@@ -54,13 +54,14 @@ body {
 			<% _.each(statuses , function(status) {%>
 				<div class="list-group">		
 					<a href="#statuses/<%= status.get('id') %>" class="list-group-item active">
-    					<h4 class="list-group-item-heading"><%= status.get('status') %> <p class="text-right"><%= $.timeago(status.get('postedOn'))%></p></h4>
+    					<h4 class="list-group-item-heading"><%= status.get('status') %></h4>
     					<p class="list-group-item-text">By <%= status.get('postedBy') %> at <%= status.get('address') %></p>
 						<p class="list-group-item-text">
 							<% _.each(status.get('hashTags') , function(hashTag) {%>
-								<span class="label label-primary"><%= hashTag %></span>
+								<span class="label label-default"><%= hashTag %></span>
 							<%});%>
 						</p>
+						<p class="text-right"><%= $.timeago(status.get('postedOn'))%></p>
   					</a>
 				</div>
 			<%});%>
